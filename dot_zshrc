@@ -1,0 +1,70 @@
+# History
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE EXTENDED_HISTORY HIST_REDUCE_BLANKS
+
+# Options
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS INTERACTIVE_COMMENTS EXTENDED_GLOB CORRECT
+
+# Plugins via antidote
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+antidote load
+autoload -Uz compinit && compinit
+
+# Prompt and shell integrations
+eval "$(starship init zsh)"
+eval "$(mise activate zsh)"
+eval "$(zoxide init --cmd=cd zsh)"
+eval "$(direnv hook zsh)"
+source <(fzf --zsh)
+
+# fzf
+export FZF_DEFAULT_OPTS='
+  --height=80% --layout=reverse --border --cycle
+  --preview-window=right:60%:wrap
+  --bind=ctrl-/:toggle-preview
+  --bind=ctrl-u:half-page-up,ctrl-d:half-page-down
+  --color=fg:#c0caf5,bg:-1,hl:#7aa2f7
+  --color=fg+:#c0caf5,bg+:#292e42,hl+:#7dcfff
+  --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff
+  --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+# kubectl
+alias k=kubectl
+compdef k=kubectl
+
+# git
+alias gs='git status'
+alias gd='git diff'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gl='git log --oneline --decorate --graph'
+alias gp='git pull'
+alias gP='git push'
+
+# docker
+alias d='docker'
+alias dc='docker compose'
+alias dps='docker ps'
+
+# misc
+alias cls='clear'
+alias vim='nvim'
+alias gg='lazygit'
+alias cc='claude'
+alias z='cd'
+
+# functions
+kpf()   { kubectl port-forward "$@"; }
+kexec() { local p=$1; shift; kubectl exec -it "$p" -- "${@:-sh}"; }
+klogs() { kubectl logs -f "$@"; }
+docker-gc() { docker system prune -af --volumes; }
+
+# Machine-local overrides (secrets, per-host PATH, etc) — not tracked by chezmoi
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

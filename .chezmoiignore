@@ -1,0 +1,4 @@
+# Generated nvim state — never track these even if added by accident.
+.local/share/nvim
+.local/state/nvim
+.cache/nvim

@@ -1,0 +1,42 @@
+return {
+  cmd = { 'tailwindcss-language-server', '--stdio' },
+  filetypes = {
+    'astro',
+    'css',
+    'html',
+    'javascript',
+    'javascriptreact',
+    'postcss',
+    'scss',
+    'typescript',
+    'typescriptreact',
+    'vue',
+  },
+  root_markers = {
+    'tailwind.config.js',
+    'tailwind.config.cjs',
+    'tailwind.config.mjs',
+    'tailwind.config.ts',
+    'tailwind.config.css',
+    'postcss.config.js',
+    'postcss.config.cjs',
+    'postcss.config.mjs',
+    'postcss.config.ts',
+    'package.json',
+  },
+  settings = {
+    tailwindCSS = {
+      classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
+      lint = {
+        cssConflict = 'warning',
+        invalidApply = 'error',
+        invalidScreen = 'error',
+        invalidVariant = 'error',
+        invalidConfigPath = 'error',
+        invalidTailwindDirective = 'error',
+        recommendedVariantOrder = 'warning',
+      },
+      validate = true,
+    },
+  },
+}
