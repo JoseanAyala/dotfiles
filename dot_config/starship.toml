@@ -6,7 +6,3 @@ disabled = false
 format = '[$symbol$context( \($namespace\))]($style) '
 symbol = '☸ '
 style = 'cyan bold'
-
-# Example context aliases — uncomment and adapt to your clusters:
-# [kubernetes.context_aliases]
-# 'arn:aws:eks:us-east-1:.*:cluster/(?P<cluster>[\w-]+)' = '$cluster'
