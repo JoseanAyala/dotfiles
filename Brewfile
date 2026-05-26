@@ -1,5 +1,4 @@
 # Shell & prompt
-brew "zsh"
 brew "antidote"
 brew "starship"
 
